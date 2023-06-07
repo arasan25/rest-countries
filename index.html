@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rest Countries with Weather Condition Data</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+  
+  </head>
+  <body>
+  </body>
+
+
+ <script>
+ 
+
+    var container = document.createElement("div");
+    container.setAttribute("class","container");
+
+    
+    var row = document.createElement("div");
+    row.setAttribute("class","row");
+    container.append(row);
+    
+    
+    var res1=fetch("https://restcountries.com/v2/all")
+    .then((data)=>data.json())
+    .then((data1)=>{   
+        for(var i=0; i<data1.length; i++){      
+        {        
+            row.innerHTML += `<div class="col-md-4">
+            <div class="card">
+            <div class="card-header"><b>${data1[i].name}</b></div>
+            <div class="card-body">
+            <img src="${data1[i].flag}" class="card-img">
+            <h6 class="card-title">Captial : ${data1[i].capital}</h6>
+            <h6 class="card-title">Region : ${data1[i].region}</h6>
+            <h6 class="card-title">Country Code : ${data1[i].alpha3Code}</h6>                  
+            <button class= "btn btn-primary" id="weather-button" onclick="foo(${data1[i].latlng[0]},${data1[i].latlng[1]})">Click weather</button>
+            </div>
+          </div>
+          </div>`
+          }     
+          document.body.append(container);
+        }
+    });
+    function foo(a,b){
+      
+      
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${a}&lon=${b}&appid=3226ce0ee6d73b13a0cb40a0fb71540e`)
+      .then((data)=>data.json())
+    .then((data1)=>{   
+      alert(`Temperature: ${data1.main.temp}`);
+      });
+    }
+ </script>
+
+
+
+
+
+
+    <style>
+
+    .row{
+        padding:35px;
+        background-color: rgb(26, 23, 219);
+    }
+
+    .card{
+      margin-top: 10px;
+    }
+
+    .card-header{
+        background-color: rgb(0, 0, 0);
+        color:rgb(219, 33, 33);
+        font-family: 'Times New Roman', Times, serif;
+        text-align:center;
+    }
+    
+    .card-img{
+        width:100%;
+        height:150px;
+        margin-bottom: 15px;
+    }
+
+    .card-body{
+        text-align:center;
+        background-color:rgb(189, 162, 162);
+        color:white;
+      }
+      
+    #weather-button{
+        border:1px solid rgb(184, 164, 38);
+        padding:6px;
+        border-radius:20px;
+        color:rgb(207, 9, 9);
+        background-color: transparent;
+    }
+     #weather-button:hover{
+        color: rgb(16, 78, 10);
+    
+    }
+    
+      
+    </style>
+
+</html>
